@@ -102,30 +102,34 @@ export default function App() {
 
           <div className="space-y-2">
             <label className="block text-sm font-semibold text-gray-700">
-              Banking Days: {bankingDays} {bankingDays === 1 ? 'day' : 'days'}
+              Banking Days
             </label>
-            <input
-              type="range"
-              min="1"
-              max={eventDay - 1}
+            <select
               value={bankingDays}
               onChange={(e) => setBankingDays(parseInt(e.target.value))}
-              className="w-full"
-            />
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+            >
+              {Array.from({ length: eventDay - 1 }, (_, i) => i + 1).map((num) => (
+                <option key={num} value={num}>
+                  {num} {num === 1 ? 'day' : 'days'}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div className="space-y-2">
             <label className="block text-sm font-semibold text-gray-700">
-              Total Calories to Bank: {totalBank}
+              Total Calories to Bank
             </label>
             <input
-              type="range"
+              type="number"
               min="100"
               max="3000"
               step="50"
               value={totalBank}
-              onChange={(e) => setTotalBank(parseInt(e.target.value))}
-              className="w-full"
+              onChange={(e) => setTotalBank(parseInt(e.target.value) || 0)}
+              placeholder="e.g., 1000"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
             />
           </div>
         </div>
