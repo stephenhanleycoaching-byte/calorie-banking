@@ -202,7 +202,7 @@ export default function App() {
               <div style={{ background: '#F0FDF4', padding: '16px', borderRadius: '8px' }}>
                 <p style={{ fontSize: '14px', color: '#4B5563', marginBottom: '4px' }}>Event Day Calories</p>
                 <p style={{ fontSize: '24px', fontWeight: 'bold', color: '#16A34A' }}>{Math.round(eventDayCalories)}</p>
-                <p style={{ fontSize: '12px', color: '#6B7280', marginTop: '4px' }>(+{totalBank} cal bonus)</p>
+                <p style={{ fontSize: '12px', color: '#6B7280', marginTop: '4px' }>(+{totalBank} cal bonus)}</p>
               </div>
               <div style={{ background: '#F9FAFB', padding: '16px', borderRadius: '8px' }}>
                 <p style={{ fontSize: '14px', color: '#4B5563', marginBottom: '4px' }}>Daily Baseline</p>
