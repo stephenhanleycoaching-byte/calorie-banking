@@ -1,8 +1,8 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceLine } from 'recharts';
 import { Calendar } from 'lucide-react';
 
-export default function CalorieBankingChart() {
+export default function App() {
   const [dailyCalories, setDailyCalories] = useState('');
   const [eventDay, setEventDay] = useState(7);
   const [bankingDays, setBankingDays] = useState(6);
@@ -47,7 +47,7 @@ export default function CalorieBankingChart() {
     }
     
     return data;
-  }, [dailyCalories, eventDay, bankingDays, totalBank]);
+  }, [dailyCalories, eventDay, bankingDays, totalBank, daysOfWeek]);
 
   const dailyDeficit = totalBank / bankingDays;
   const bankingCalories = dailyCalories ? parseFloat(dailyCalories) - dailyDeficit : 0;
