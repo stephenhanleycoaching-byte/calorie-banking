@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceLine } from 'recharts';
 import { Calendar } from 'lucide-react';
 
@@ -47,27 +47,85 @@ export default function App() {
     }
     
     return data;
-  }, [dailyCalories, eventDay, bankingDays, totalBank]);
+  }, [dailyCalories, eventDay, bankingDays, totalBank, daysOfWeek]);
 
   const dailyDeficit = totalBank / bankingDays;
   const bankingCalories = dailyCalories ? parseFloat(dailyCalories) - dailyDeficit : 0;
   const eventDayCalories = dailyCalories ? parseFloat(dailyCalories) + totalBank : 0;
 
+  const cardStyle = {
+    width: '100%',
+    maxWidth: '1200px',
+    margin: '0 auto',
+    padding: '24px',
+    background: 'linear-gradient(to bottom right, #EBF4FF, #E0E7FF)',
+    borderRadius: '8px',
+    boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
+  };
+
+  const whiteCardStyle = {
+    background: 'white',
+    borderRadius: '8px',
+    padding: '24px',
+    boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1)',
+    marginBottom: '24px'
+  };
+
+  const headerStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
+    marginBottom: '24px'
+  };
+
+  const inputGridStyle = {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+    gap: '24px'
+  };
+
+  const inputGroupStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '8px'
+  };
+
+  const labelStyle = {
+    display: 'block',
+    fontSize: '14px',
+    fontWeight: '600',
+    color: '#374151'
+  };
+
+  const inputStyle = {
+    width: '100%',
+    padding: '8px 16px',
+    border: '1px solid #D1D5DB',
+    borderRadius: '8px',
+    fontSize: '16px'
+  };
+
+  const statsGridStyle = {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+    gap: '16px'
+  };
+
   return (
-    <div style={{ width: '100%', maxWidth: '1200px', margin: '0 auto', padding: '24px', background: 'linear-gradient(to bottom right, #EBF4FF, #E0E7FF)', borderRadius: '8px', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)' }}>
-      <div style={{ background: 'white', borderRadius: '8px', padding: '24px', boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1)', marginBottom: '24px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px' }}>
+    <div style={cardStyle}>
+      <div style={whiteCardStyle}>
+        <div style={headerStyle}>
           <Calendar size={32} color="#4F46E5" />
-          <h1 style={{ fontSize: '30px', fontWeight: 'bold', color: '#1F2937' }}>Calorie Banking Calculator</h1>
+          <h1 style={{ fontSize: '30px', fontWeight: 'bold', color: '#1F2937', margin: 0 }}>Calorie Banking Calculator</h1>
         </div>
         
         <p style={{ color: '#4B5563', marginBottom: '24px' }}>
           Plan your calorie banking strategy by setting aside calories from multiple days to enjoy on a special event day.
         </p>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '24px' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', color: '#374151' }}>
+        <div style={inputGridStyle}>
+          <div style={inputGroupStyle}>
+            <label style={labelStyle}>
               Daily Calorie Target
             </label>
             <input
@@ -75,12 +133,12 @@ export default function App() {
               value={dailyCalories}
               onChange={(e) => setDailyCalories(e.target.value)}
               placeholder="e.g., 2000"
-              style={{ width: '100%', padding: '8px 16px', border: '1px solid #D1D5DB', borderRadius: '8px', fontSize: '16px' }}
+              style={inputStyle}
             />
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', color: '#374151' }}>
+          <div style={inputGroupStyle}>
+            <label style={labelStyle}>
               Event Day: {daysOfWeek[eventDay - 1]}
             </label>
             <select
@@ -92,7 +150,7 @@ export default function App() {
                   setBankingDays(newEventDay - 1);
                 }
               }}
-              style={{ width: '100%', padding: '8px 16px', border: '1px solid #D1D5DB', borderRadius: '8px', fontSize: '16px' }}
+              style={inputStyle}
             >
               {daysOfWeek.map((day, index) => (
                 <option key={day} value={index + 1}>{day}</option>
@@ -100,8 +158,8 @@ export default function App() {
             </select>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', color: '#374151' }}>
+          <div style={inputGroupStyle}>
+            <label style={labelStyle}>
               Banking Days: {bankingDays} {bankingDays === 1 ? 'day' : 'days'}
             </label>
             <input
@@ -114,8 +172,8 @@ export default function App() {
             />
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <label style={{ display: 'block', fontSize: '14px', fontWeight: '600', color: '#374151' }}>
+          <div style={inputGroupStyle}>
+            <label style={labelStyle}>
               Total Calories to Bank: {totalBank}
             </label>
             <input
@@ -133,13 +191,13 @@ export default function App() {
 
       {dailyCalories && parseFloat(dailyCalories) > 0 ? (
         <>
-          <div style={{ background: 'white', borderRadius: '8px', padding: '24px', boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1)', marginBottom: '24px' }}>
+          <div style={whiteCardStyle}>
             <h2 style={{ fontSize: '20px', fontWeight: 'bold', color: '#1F2937', marginBottom: '16px' }}>Your Calorie Plan</h2>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
+            <div style={statsGridStyle}>
               <div style={{ background: '#EFF6FF', padding: '16px', borderRadius: '8px' }}>
                 <p style={{ fontSize: '14px', color: '#4B5563', marginBottom: '4px' }}>Banking Days Calories</p>
                 <p style={{ fontSize: '24px', fontWeight: 'bold', color: '#2563EB' }}>{Math.round(bankingCalories)}</p>
-                <p style={{ fontSize: '12px', color: '#6B7280', marginTop: '4px' }}>({Math.round(dailyDeficit)} cal deficit/day)</p>
+                <p style={{ fontSize: '12px', color: '#6B7280', marginTop: '4px' }}>({Math.round(dailyDeficit)} cal deficit per day)</p>
               </div>
               <div style={{ background: '#F0FDF4', padding: '16px', borderRadius: '8px' }}>
                 <p style={{ fontSize: '14px', color: '#4B5563', marginBottom: '4px' }}>Event Day Calories</p>
@@ -154,7 +212,7 @@ export default function App() {
             </div>
           </div>
 
-          <div style={{ background: 'white', borderRadius: '8px', padding: '24px', boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1)' }}>
+          <div style={whiteCardStyle}>
             <h2 style={{ fontSize: '20px', fontWeight: 'bold', color: '#1F2937', marginBottom: '16px' }}>Calorie Banking Timeline</h2>
             <ResponsiveContainer width="100%" height={400}>
               <BarChart data={chartData}>
@@ -163,7 +221,7 @@ export default function App() {
                 <YAxis label={{ value: 'Calories', angle: -90, position: 'insideLeft' }} />
                 <Tooltip 
                   contentStyle={{ backgroundColor: 'white', border: '1px solid #ccc', borderRadius: '8px' }}
-                  formatter={(value, name) => [value, name === 'calories' ? 'Daily Intake' : 'Baseline']}
+                  formatter={(value) => [value, 'Daily Intake']}
                 />
                 <Legend />
                 <ReferenceLine y={parseFloat(dailyCalories)} stroke="#9CA3AF" strokeDasharray="5 5" label="Baseline" />
